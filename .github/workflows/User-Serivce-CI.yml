@@ -22,7 +22,7 @@ jobs:
 
     - name: Build User Service
       run: |
-        cd user-service
+        cd ./User-Service
         ./gradlew clean build -x test
 
     - name: Docker build & push
