@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM openjdk:17
 # 인자 설정
 ARG JAR_FILE=build/libs/*.jar
 # jar 파일 복제
