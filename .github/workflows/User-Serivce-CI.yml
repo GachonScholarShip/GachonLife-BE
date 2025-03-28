@@ -1,0 +1,32 @@
+name: User Service CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'User-Service/**'
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy User Service
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build User Service
+      run: |
+        cd user-service
+        ./gradlew clean build -x test
+
+    - name: Docker build & push
+      run: |
+        docker login -u ${{ secrets.DOCKER_USER_NAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker buildx create --use
+        docker buildx build --platform linux/amd64,linux/arm64 -f ./User-Service/Dockerfile-dev -t ${{ secrets.DOCKER_USER_NAME }}/gachonLife:${{ secrets.DOCKER_TAG }} --push .
