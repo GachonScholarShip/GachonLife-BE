@@ -1,4 +1,4 @@
-name: User Service CI/CD
+name: User Service CI
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    name: Build & Deploy User Service
+    name: Build User Service
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,18 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
+
+    # Gradle 캐시 설정 추가
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+          User-Service/.gradle  # 프로젝트별 Gradle 캐시 디렉토리
+        key: ${{ runner.os }}-gradle-${{ hashFiles('User-Service/gradle/wrapper/gradle-wrapper.properties', 'User-Service/build.gradle') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
 
     # Gradle Build를 위한 권한 부여
     - name: Grant execute permission for gradlew
