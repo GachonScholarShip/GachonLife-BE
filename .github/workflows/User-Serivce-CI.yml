@@ -50,5 +50,6 @@ jobs:
 
     - name: Docker build & push
       run: |
+        cd User-Service
         docker buildx create --use
-        docker buildx build --platform linux/amd64,linux/arm64 -f ./User-Service/Dockerfile-dev -t ${{ secrets.DOCKER_USER_NAME }}/gachon-user-service:${{ secrets.DOCKER_TAG }} --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile-dev -t ${{ secrets.DOCKER_USER_NAME }}/gachon-user-service:${{ secrets.DOCKER_TAG }} --push .
