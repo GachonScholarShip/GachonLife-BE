@@ -2,9 +2,9 @@ FROM openjdk:17
 # 인자 설정
 ARG JAR_FILE=build/libs/*.jar
 # jar 파일 복제
-COPY ${JAR_FILE} application.jar
+COPY ${JAR_FILE} user-service.jar
 
-# todo ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","/application.jar"] 프로파일 변경 해야함. #
+# todo ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","/user-service.jar"] 프로파일 변경 해야함. #
 
 # 실행 명령어
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "user-service.jar"]
