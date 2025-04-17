@@ -7,11 +7,11 @@ on:
       - 'ApiGateway-Service/**'
 
 env:
-  SERVICE_NAME: ApiGateway-Service
+  SERVICE_NAME: ${{ secrets.APIGATEWAY_SERVICE }}
 
 jobs:
   build:
-    name: Build ${{ env.SERVICE_NAME }}
+    name: Build MicroService
     runs-on: ubuntu-latest
 
     steps:
