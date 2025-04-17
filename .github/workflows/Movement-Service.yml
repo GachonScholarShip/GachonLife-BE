@@ -7,7 +7,7 @@ on:
       - 'Movement-Service/**'
 
 env:
-  SERVICE_NAME: Movement-Service
+  SERVICE_NAME: ${{ secrets.MOVEMENT_SERVICE }}
 
 jobs:
   build:
