@@ -1,0 +1,37 @@
+server:
+  port: 8000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url: # Discovery-Service Docker Container Name
+      defaultZone: http://${DISCOVERY_SERVICE}:8761/eureka
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          # ============== USER-SERVICE =============
+          - id: user-service
+            uri: lb://USER-SERVICE
+            predicates:
+              - Path=/user-service/**
+            filters:
+              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+          # ============== BUILDING-SERVICE =============
+          - id: building-service
+            uri: lb://BUILDING-SERVICE
+            predicates:
+              - Path=/building-service/**
+            filters:
+              - RewritePath=/building-service/(?<segment>.*), /$\{segment}
+          # ============== MOVEMENT-SERVICE =============
+          - id: movement-service
+            uri: lb://MOVEMENT-SERVICE
+            predicates:
+              - Path=/movement-service/**
+            filters:
+              - RewritePath=/movement-service/(?<segment>.*), /$\{segment}

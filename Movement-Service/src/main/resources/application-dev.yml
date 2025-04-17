@@ -1,0 +1,13 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: movement-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url: # Discovery-Service Docker Container Name
+      defaultZone: http://${DISCOVERY_SERVICE}:8761/eureka
