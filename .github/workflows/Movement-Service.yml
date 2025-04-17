@@ -29,8 +29,8 @@ jobs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-          Movement-Service/.gradle
-        key: ${{ runner.os }}-gradle-${{ hashFiles('Movement-Service/gradle/wrapper/gradle-wrapper.properties', 'Movement-Service/build.gradle') }}
+          ${{ env.SERVICE_NAME }}/.gradle
+        key: ${{ runner.os }}-gradle-${{ hashFiles('${{ env.SERVICE_NAME }}/gradle/wrapper/gradle-wrapper.properties', '${{ env.SERVICE_NAME }}/build.gradle') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
 

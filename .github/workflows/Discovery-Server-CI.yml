@@ -6,9 +6,12 @@ on:
     paths:
       - 'DiscoveryServer/**'
 
+env:
+  SERVICE_NAME: ${{ secrets.DISCOVERY_SERVER }}
+
 jobs:
   build:
-    name: Build Discovery-Server
+    name: Build MicroServer
     runs-on: ubuntu-latest
 
     steps:
@@ -27,18 +30,18 @@ jobs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-          DiscoveryServer/.gradle  # 프로젝트별 Gradle 캐시 디렉토리
-        key: ${{ runner.os }}-gradle-${{ hashFiles('DiscoveryServer/gradle/wrapper/gradle-wrapper.properties', 'DiscoveryServer/build.gradle') }}
+          ${{ env.SERVICE_NAME }}/.gradle  # 프로젝트별 Gradle 캐시 디렉토리
+        key: ${{ runner.os }}-gradle-${{ hashFiles('${{ env.SERVICE_NAME }}/gradle/wrapper/gradle-wrapper.properties', '${{ env.SERVICE_NAME }}/build.gradle') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
 
     # Gradle Build를 위한 권한 부여
     - name: Grant execute permission for gradlew
-      run: chmod +x ./DiscoveryServer/gradlew
+      run: chmod +x ./${{ env.SERVICE_NAME }}/gradlew
 
     - name: Build User Service
       run: |
-        cd ./DiscoveryServer
+        cd ./${{ env.SERVICE_NAME }}
         ./gradlew clean build -x test
 
     # DockerHub 로그인
@@ -50,7 +53,7 @@ jobs:
 
     - name: Docker build & push
       run: |
-        cd DiscoveryServer
+        cd ${{ env.SERVICE_NAME }}
         docker buildx create --use
         docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile-dev -t ${{ secrets.DOCKER_USER_NAME }}/gachon-discovery-server:${{ secrets.DOCKER_TAG }} --push .
 

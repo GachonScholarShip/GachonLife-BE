@@ -6,6 +6,9 @@ on:
     paths:
       - 'User-Service/**'
 
+env:
+    SERVICE_NAME: ${{ secrets.USER_SERVICE }}
+
 jobs:
   build:
     name: Build User Service
@@ -27,18 +30,18 @@ jobs:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
-          User-Service/.gradle  # 프로젝트별 Gradle 캐시 디렉토리
-        key: ${{ runner.os }}-gradle-${{ hashFiles('User-Service/gradle/wrapper/gradle-wrapper.properties', 'User-Service/build.gradle') }}
+          ${{ env.SERVICE_NAME }}/.gradle  # 프로젝트별 Gradle 캐시 디렉토리
+        key: ${{ runner.os }}-gradle-${{ hashFiles('${{ env.SERVICE_NAME }}/gradle/wrapper/gradle-wrapper.properties', 'User-Service/build.gradle') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
 
     # Gradle Build를 위한 권한 부여
     - name: Grant execute permission for gradlew
-      run: chmod +x ./User-Service/gradlew
+      run: chmod +x ./${{ env.SERVICE_NAME }}/gradlew
 
     - name: Build User Service
       run: |
-        cd ./User-Service
+        cd ./${{ env.SERVICE_NAME }}
         ./gradlew clean build -x test
 
     # DockerHub 로그인
