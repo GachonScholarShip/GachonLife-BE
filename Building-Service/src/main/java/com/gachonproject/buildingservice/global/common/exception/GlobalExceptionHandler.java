@@ -1,7 +1,6 @@
 package com.gachonproject.buildingservice.global.common.exception;
 
-import com.gachonproject.userservice.global.common.exception.BaseException;
-import com.gachonproject.userservice.global.common.response.ApiResponse;
+import com.gachonproject.buildingservice.global.common.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
