@@ -1,1 +1,8 @@
-# todo Dockerfile 작성
+FROM openjdk:17
+# 인자 설정
+ARG JAR_FILE=build/libs/*.jar
+# jar 파일 복제
+COPY ${JAR_FILE} apigateway-service.jar
+
+# 실행 명령어
+ENTRYPOINT ["java", "-jar","-Dspring.profiles.active=dev", "apigateway-service.jar"]
