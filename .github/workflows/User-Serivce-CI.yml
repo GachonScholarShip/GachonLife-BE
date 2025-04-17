@@ -70,7 +70,5 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           # key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            whoami
-            sudo -l
             echo "Deploy 쉘 스크립트 실행"
             sudo ./deploy.sh
