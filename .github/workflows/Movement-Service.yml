@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    name: Build ${{ env.SERVICE_NAME }}
+    name: Build MicroService
     runs-on: ubuntu-latest
 
     steps:
