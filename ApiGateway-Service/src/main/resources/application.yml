@@ -29,3 +29,10 @@ spring:
               - Path=/building-service/**
             filters:
               - RewritePath=/building-service/(?<segment>.*), /$\{segment}
+          # ============== MOVEMENT-SERVICE =============
+          - id: movement-service
+            uri: lb://MOVEMENT-SERVICE
+            predicates:
+              - Path=/movement-service/**
+            filters:
+              - RewritePath=/movement-service/(?<segment>.*), /$\{segment}

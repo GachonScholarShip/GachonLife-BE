@@ -1,1 +1,13 @@
-spring.application.name=Movement-Service
+server:
+  port: 8083
+
+spring:
+  application:
+    name: movement-service
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
