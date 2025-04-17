@@ -4,7 +4,5 @@ ARG JAR_FILE=build/libs/*.jar
 # jar 파일 복제
 COPY ${JAR_FILE} user-service.jar
 
-# todo ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","/user-service.jar"] 프로파일 변경 해야함. #
-
 # 실행 명령어
-ENTRYPOINT ["java", "-jar", "user-service.jar"]
+ENTRYPOINT ["java", "-jar","-Dspring.profiles.active=dev", "user-service.jar"]
