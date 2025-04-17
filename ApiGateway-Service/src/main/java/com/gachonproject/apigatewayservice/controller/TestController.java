@@ -8,7 +8,7 @@ public class TestController {
 
     @GetMapping("/test")
     public String test() {
-        return "apigateway-service test1";
+        return "apigateway-service 동작 테스트 1";
     }
 
 }
