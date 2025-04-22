@@ -13,26 +13,73 @@ spring:
     name: apigateway-service
   cloud:
     gateway:
-      mvc:
-        routes:
-          # ============== USER-SERVICE =============
-          - id: user-service
-            uri: lb://USER-SERVICE
-            predicates:
-              - Path=/user-service/**
-            filters:
-              - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-          # ============== BUILDING-SERVICE =============
-          - id: building-service
-            uri: lb://BUILDING-SERVICE
-            predicates:
-              - Path=/building-service/**
-            filters:
-              - RewritePath=/building-service/(?<segment>.*), /$\{segment}
-          # ============== MOVEMENT-SERVICE =============
-          - id: movement-service
-            uri: lb://MOVEMENT-SERVICE
-            predicates:
-              - Path=/movement-service/**
-            filters:
-              - RewritePath=/movement-service/(?<segment>.*), /$\{segment}
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+#              - "http://localhost:3000"
+#              - "http://127.0.0.1:5500"
+#            allow-credentials: true
+            allowedHeaders:
+              - x-requested-with
+              - Authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - PATCH
+              - OPTIONS
+              - DELETE
+            exposedHeaders:
+              - "Authorization"
+              - "X-AUTH-TOKEN"
+      routes:
+        # ============== USER-SERVICE =============
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - AuthenticationFilter
+        # ============== BUILDING-SERVICE =============
+        - id: building-service
+          uri: lb://BUILDING-SERVICE
+          predicates:
+            - Path=/building-service/**
+          filters:
+            - RewritePath=/building-service/(?<segment>.*), /$\{segment}
+        # ============== MOVEMENT-SERVICE =============
+        - id: movement-service
+          uri: lb://MOVEMENT-SERVICE
+          predicates:
+            - Path=/movement-service/**
+          filters:
+            - RewritePath=/movement-service/(?<segment>.*), /$\{segment}
+            - AuthenticationFilter
+
+
+#springdoc:
+#  enable-native-support: true
+#  api-docs:
+#    enabled: true
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui.html
+#    config-url: /v3/api-docs/swagger-config
+#    urls:
+#      - name: User-Service
+#        url: /user-service/v3/api-docs
+
+gachonlife:
+  auth:
+    jwt:
+      accessTokenExpiration: ${JWT_ACCESS_EXPIRATION}
+      key: ${JWT_SECRET_KEY}
