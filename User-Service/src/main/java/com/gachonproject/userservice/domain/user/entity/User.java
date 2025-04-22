@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
@@ -38,11 +39,11 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    public static User of(UserCreateDto dto) {
+    public static User of(UserCreateDto dto, BCryptPasswordEncoder encoder) {
         return User.builder()
                 .username(dto.username())
                 .email(dto.email())
-                .password(dto.password()) // todo Password Encode
+                .password(encoder.encode(dto.password()))
                 .studentId(dto.studentId())
                 .loginId(dto.loginId())
                 .role(Role.USER)

@@ -7,6 +7,7 @@ import com.gachonproject.userservice.domain.user.exception.StudentIdExistsExcept
 import com.gachonproject.userservice.domain.user.service.UserGetService;
 import com.gachonproject.userservice.domain.user.service.UserSaveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,11 +16,12 @@ public class AuthUseCase {
 
     private final UserSaveService userSaveService;
     private final UserGetService userGetService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public void signUp(UserCreateDto dto) {
         validate(dto);
 
-        userSaveService.save(User.of(dto));
+        userSaveService.save(User.of(dto, passwordEncoder));
     }
 
     /*
