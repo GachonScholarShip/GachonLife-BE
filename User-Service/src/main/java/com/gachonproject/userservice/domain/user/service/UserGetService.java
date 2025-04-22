@@ -14,5 +14,9 @@ public class UserGetService {
         return userRepository.existsUserByLoginId(loginId);
     }
 
+    public boolean validateStudentId(String studentId) {
+        return userRepository.existsUserByStudentId(studentId);
+    }
+
 
 }
