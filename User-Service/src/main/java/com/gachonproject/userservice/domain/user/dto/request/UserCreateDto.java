@@ -1,4 +1,4 @@
-package com.gachonproject.userservice.domain.user.dto;
+package com.gachonproject.userservice.domain.user.dto.request;
 
 import com.gachonproject.userservice.global.common.entity.enums.Sex;
 import jakarta.validation.constraints.NotBlank;
