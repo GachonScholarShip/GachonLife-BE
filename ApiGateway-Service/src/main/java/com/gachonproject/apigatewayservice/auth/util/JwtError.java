@@ -7,6 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum JwtError {
 
+    NOT_EXIST_TOKEN("JWT 토큰이 존재하지 않습니다."),
     EXPIRED_JWT("JWT 토큰이 만료되었습니다."),
     UN_SUPPORTED_JWT("지원되지 않는 JWT 토큰입니다."),
     MALFORMED_JWT("잘못된 형식의 JWT 토큰입니다."),

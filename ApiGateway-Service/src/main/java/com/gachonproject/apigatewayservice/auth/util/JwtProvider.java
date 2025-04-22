@@ -50,6 +50,9 @@ public class JwtProvider {
 
     public JwtError isJwtValid(String token) {
         JwtError jwtError = JwtError.PASS;
+        if(token == null){
+            return JwtError.NOT_EXIST_TOKEN;
+        }
 
         try {
             Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
