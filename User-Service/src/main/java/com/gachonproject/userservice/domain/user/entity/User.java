@@ -1,5 +1,6 @@
 package com.gachonproject.userservice.domain.user.entity;
 
+import com.gachonproject.userservice.domain.user.dto.UserCreateDto;
 import com.gachonproject.userservice.global.common.entity.BaseEntity;
 import com.gachonproject.userservice.global.common.entity.enums.Role;
 import com.gachonproject.userservice.global.common.entity.enums.Sex;
@@ -30,5 +31,18 @@ public class User extends BaseEntity {
     private Role role;
 
     private Sex sex;
+
+    public static User of(UserCreateDto dto) {
+        return User.builder()
+                .username(dto.username())
+                .email(dto.email())
+                .password(dto.password()) // todo Password Encode
+                .studentId(dto.studentId())
+                .loginId(dto.loginId())
+                .role(Role.USER)
+                .sex(dto.sex())
+                .build();
+
+    }
 
 }
