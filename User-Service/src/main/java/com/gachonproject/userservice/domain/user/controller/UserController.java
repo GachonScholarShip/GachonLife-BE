@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping("/user")
     public ApiResponse<List<UserResponseDto>> getUserList(@RequestParam(defaultValue = "0", required = false) int pageNumber,
-                                                          @RequestParam(defaultValue = "0", required = false) int pageSize) {
+                                                          @RequestParam(defaultValue = "5", required = false) int pageSize) {
 
         List<UserResponseDto> response = userUseCase.findUserList(pageNumber, pageSize);
 
