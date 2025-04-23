@@ -14,7 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.AntPathMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -22,7 +22,6 @@ import org.springframework.util.AntPathMatcher;
 public class SecurityConfig {
 
     private final JwtProvider jwtProvider;
-    private final AntPathMatcher antPathMatcher;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
