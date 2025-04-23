@@ -1,6 +1,7 @@
 package com.gachonproject.userservice.domain.user.entity;
 
 import com.gachonproject.userservice.domain.user.dto.request.UserCreateDto;
+import com.gachonproject.userservice.domain.user.dto.request.UserUpdateDto;
 import com.gachonproject.userservice.global.common.entity.BaseEntity;
 import com.gachonproject.userservice.global.common.entity.enums.Role;
 import com.gachonproject.userservice.global.common.entity.enums.Sex;
@@ -49,7 +50,13 @@ public class User extends BaseEntity {
                 .role(Role.USER)
                 .sex(dto.sex())
                 .build();
+    }
 
+    public void updateField(UserUpdateDto dto) {
+        this.email = dto.email();
+        this.username = dto.username();
+        this.sex = dto.sex();
+        this.studentId = dto.studentId();
     }
 
 }
