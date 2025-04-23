@@ -33,12 +33,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     // USER 접근 허용 경로 (ADMIN도 허용)
     private static final List<String> memberOnlyList = List.of(
-            "/user-service/**", "/mypage/**", "movement-service/**"
+            "/member/**"
     );
 
     // ADMIN만 접근 허용
     private static final List<String> adminOnlyList = List.of(
-            "/admin-service/**", "/admin-panel/**"
+            "/admin/**"
     );
 
 
@@ -67,7 +67,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
             String role = jwtProvider.getRole(token);
 
             if (!isAuthorized(path, role)) {
-                return onError(exchange, "Forbidden", HttpStatus.FORBIDDEN);
+                return onError(exchange, JwtError.UN_AUTHORIZED.getMessage(), HttpStatus.FORBIDDEN);
             }
 
 //            ServerHttpRequest mutatedRequest = request.mutate()
