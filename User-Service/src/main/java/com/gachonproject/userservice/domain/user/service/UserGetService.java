@@ -1,8 +1,14 @@
 package com.gachonproject.userservice.domain.user.service;
 
+import com.gachonproject.userservice.domain.user.entity.User;
+import com.gachonproject.userservice.domain.user.exception.UserNotFoundException;
 import com.gachonproject.userservice.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +22,16 @@ public class UserGetService {
 
     public boolean validateStudentId(String studentId) {
         return userRepository.existsUserByStudentId(studentId);
+    }
+
+    public User findByUserId(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    public List<User> findUserList(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return userRepository.findAll(pageable).getContent();
     }
 
 
