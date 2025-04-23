@@ -26,4 +26,13 @@ public class UserUseCase {
                 .toList();
     }
 
+    @Transactional
+    public void updateUser(UserUpdateDto dto){
+
+        userGetService.validateStudentId(dto.studentId());
+
+        User findUser = userGetService.findByUserId(dto.userId());
+        findUser.updateField(dto);
+    }
+
 }

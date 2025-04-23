@@ -28,4 +28,12 @@ public class UserController {
         return ApiResponse.response(OK, USER_LIST_SUCCESS.getMessage(), response);
     }
 
+    @PatchMapping("/user")
+    public ApiResponse<Void> updateUser(@RequestBody UserUpdateDto dto) {
+
+        userUseCase.updateUser(dto);
+
+        return ApiResponse.response(OK, USER_UPDATE_SUCCESS.getMessage());
+    }
+
 }
