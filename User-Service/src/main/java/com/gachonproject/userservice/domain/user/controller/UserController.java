@@ -36,4 +36,12 @@ public class UserController {
         return ApiResponse.response(OK, USER_UPDATE_SUCCESS.getMessage());
     }
 
+    @DeleteMapping("/user/{userId}")
+    public ApiResponse<Void> deleteUser(@PathVariable Long userId) {
+
+        userUseCase.deleteUser(userId);
+
+        return ApiResponse.response(OK, USER_DELETE_SUCCESS.getMessage());
+    }
+
 }

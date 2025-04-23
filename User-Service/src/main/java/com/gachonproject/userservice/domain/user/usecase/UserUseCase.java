@@ -35,4 +35,11 @@ public class UserUseCase {
         findUser.updateField(dto);
     }
 
+    public void deleteUser(Long userId){
+
+        User findUser = userGetService.findByUserId(userId);
+
+        userDeleteService.delete(findUser);
+    }
+
 }
