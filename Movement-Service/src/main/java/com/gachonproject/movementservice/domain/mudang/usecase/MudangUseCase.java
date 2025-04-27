@@ -37,6 +37,45 @@ public class MudangUseCase {
         mudangSaveService.saveMudang(Mudang.from(dto));
     }
 
+    public String getMudangTime() {
+        LocalTime now = LocalTime.now();
+        checkIsLunchTime(now);
 
+        String minusFiveMinute = getTimeToMinusRequestTime(now);
+        Mudang mudang = mudangGetService.getMudang(minusFiveMinute);
+
+        long abs = getAbsTime(minusFiveMinute, mudang);
+        return String.format(RESPONSE_FORMAT, mudang.getTimeslot(), abs);
+    }
+
+
+
+    /*
+    * refactor
+    * */
+
+    private static void checkIsLunchTime(LocalTime now) {
+        LocalTime start = LocalTime.of(11, 50);
+        LocalTime end = LocalTime.of(12, 50);
+
+        if (!now.isBefore(start) && !now.isAfter(end)) {
+            throw new LargeBusRunException();
+        }
+    }
+
+    private long getAbsTime(String minusFiveMinute, Mudang mudang) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIME_FORMAT);
+        LocalTime t1 = LocalTime.parse(minusFiveMinute, formatter);
+        LocalTime t2 = LocalTime.parse(mudang.getTimeslot(), formatter);
+
+        return Math.abs(Duration.between(t1, t2).toMinutes());
+    }
+
+    private String getTimeToMinusRequestTime(LocalTime now) {
+        LocalTime requestTime = now.minusMinutes(5);
+
+        String minusFiveMinute = requestTime.format(DateTimeFormatter.ofPattern(TIME_FORMAT));
+        return minusFiveMinute;
+    }
 
 }

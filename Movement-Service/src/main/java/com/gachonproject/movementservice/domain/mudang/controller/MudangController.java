@@ -26,6 +26,12 @@ public class MudangController {
         return ApiResponse.response(HttpStatus.OK, MUDANG_CREATE.getMessage());
     }
 
+    @GetMapping("/member/mudang")
+    public ApiResponse<String> getMudangTime() {
 
+        String response = mudangUseCase.getMudangTime();
+
+        return ApiResponse.response(HttpStatus.OK, MUDANG_SINGLE_TIME.getMessage(), response);
+    }
 
 }
