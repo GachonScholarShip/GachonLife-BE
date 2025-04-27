@@ -24,4 +24,8 @@ public class Mudang extends BaseEntity {
                 .build();
     }
 
+    public void updateTimeslot(String timeslot) {
+        this.timeslot = timeslot;
+    }
+
 }

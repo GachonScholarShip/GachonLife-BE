@@ -34,4 +34,10 @@ public class MudangController {
         return ApiResponse.response(HttpStatus.OK, MUDANG_SINGLE_TIME.getMessage(), response);
     }
 
+    @PatchMapping("/admin/mudang")
+    public ApiResponse<Void> updateMudangTime(@RequestBody MudangUpdateDto dto) {
+        mudangUseCase.updateMudang(dto);
+        return ApiResponse.response(HttpStatus.OK, MUDANG_UPDATE.getMessage());
+    }
+
 }

@@ -48,6 +48,14 @@ public class MudangUseCase {
         return String.format(RESPONSE_FORMAT, mudang.getTimeslot(), abs);
     }
 
+    @Transactional
+    public void updateMudang(MudangUpdateDto dto) {
+        mudangGetService.checkValidTime(dto.timeslot());
+
+        Mudang findMudang = mudangGetService.getMudangByMudangId(dto.mudangId());
+        mudangUpdateService.updateMudang(findMudang, dto.timeslot());
+    }
+
 
 
     /*
