@@ -40,4 +40,12 @@ public class MudangController {
         return ApiResponse.response(HttpStatus.OK, MUDANG_UPDATE.getMessage());
     }
 
+    @DeleteMapping("/admin/mudang/{mudangId}")
+    public ApiResponse<Void> deleteMudangTime(@PathVariable Long mudangId) {
+
+        mudangUseCase.deleteMudang(mudangId);
+
+        return ApiResponse.response(HttpStatus.OK, MUDANG_DELETE.getMessage());
+    }
+
 }

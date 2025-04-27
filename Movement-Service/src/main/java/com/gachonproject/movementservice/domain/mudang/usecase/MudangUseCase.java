@@ -56,6 +56,11 @@ public class MudangUseCase {
         mudangUpdateService.updateMudang(findMudang, dto.timeslot());
     }
 
+    @Transactional
+    public void deleteMudang(Long mudangId) {
+        Mudang findMudang = mudangGetService.getMudangByMudangId(mudangId);
+        mudangDeleteService.deleteMudang(findMudang);
+    }
 
 
     /*
