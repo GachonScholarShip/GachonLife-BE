@@ -6,7 +6,10 @@ import com.gachonproject.movementservice.domain.mudang.exception.MudangNotFoundE
 import com.gachonproject.movementservice.domain.mudang.exception.MudangTooLateException;
 import com.gachonproject.movementservice.domain.mudang.repository.MudangRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +18,12 @@ public class MudangGetService {
     private final MudangRepository mudangRepository;
 
     public Mudang getMudang(String timeslot) {
-
         return mudangRepository.findFirstByTimeslotGreaterThanOrderByTimeslotAsc(timeslot)
                 .orElseThrow(MudangTooLateException::new);
+    }
+
+    public List<Mudang> getMudangTimeList(Pageable pageable) {
+        return mudangRepository.findMudangByOrderByTimeslotAsc(pageable);
     }
 
     public Mudang getMudangByMudangId(Long id) {

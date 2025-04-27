@@ -2,6 +2,7 @@ package com.gachonproject.movementservice.domain.mudang.usecase;
 
 import com.gachonproject.movementservice.domain.mudang.dto.request.MudangSaveDto;
 import com.gachonproject.movementservice.domain.mudang.dto.request.MudangUpdateDto;
+import com.gachonproject.movementservice.domain.mudang.dto.response.MudangDetailDto;
 import com.gachonproject.movementservice.domain.mudang.entity.Mudang;
 import com.gachonproject.movementservice.domain.mudang.exception.LargeBusRunException;
 import com.gachonproject.movementservice.domain.mudang.service.MudangDeleteService;
@@ -11,11 +12,13 @@ import com.gachonproject.movementservice.domain.mudang.service.MudangUpdateServi
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -46,6 +49,16 @@ public class MudangUseCase {
 
         long abs = getAbsTime(minusFiveMinute, mudang);
         return String.format(RESPONSE_FORMAT, mudang.getTimeslot(), abs);
+    }
+
+    public List<MudangDetailDto> getMudangTimeList(int pageNum, int pageSize) {
+
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+
+        return mudangGetService.getMudangTimeList(pageRequest)
+                .stream()
+                .map(MudangDetailDto::from)
+                .toList();
     }
 
     @Transactional
