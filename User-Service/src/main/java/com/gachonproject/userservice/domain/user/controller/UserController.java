@@ -20,10 +20,10 @@ public class UserController {
     private final UserUseCase userUseCase;
 
     @GetMapping("/user")
-    public ApiResponse<List<UserResponseDto>> getUserList(@RequestParam(defaultValue = "0", required = false) int pageNumber,
+    public ApiResponse<List<UserResponseDto>> getUserList(@RequestParam(defaultValue = "0", required = false) int pageNum,
                                                           @RequestParam(defaultValue = "5", required = false) int pageSize) {
 
-        List<UserResponseDto> response = userUseCase.findUserList(pageNumber, pageSize);
+        List<UserResponseDto> response = userUseCase.findUserList(pageNum, pageSize);
 
         return ApiResponse.response(OK, USER_LIST_SUCCESS.getMessage(), response);
     }
