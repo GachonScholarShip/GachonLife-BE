@@ -30,15 +30,15 @@ public class RoadViewController {
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_CREATE_SUCCESS.getMessage());
     }
 
-    @GetMapping("/member/road_view/{end_point}")
-    public ApiResponse<RoadViewDetailDto> getRoadView(@PathVariable(name = "end_point") String endPoint) {
+    @GetMapping("/member/road_view/{endPoint}")
+    public ApiResponse<RoadViewDetailDto> getRoadView(@PathVariable(name = "endPoint") String endPoint) {
 
         RoadViewDetailDto response = roadViewUseCase.getRoadViewDetail(endPoint);
 
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_DETAIL_SUCCESS.getMessage(), response);
     }
 
-    @GetMapping("/member/road_view")
+    @GetMapping("/member/roadView")
     public ApiResponse<List<RoadViewDetailDto>> getRoadViews(
             @RequestParam(defaultValue = "0", required = false) int pageNum,
             @RequestParam(defaultValue = "10", required = false) int pageSize
@@ -57,5 +57,12 @@ public class RoadViewController {
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_UPDATE_SUCCESS.getMessage());
     }
 
+    @DeleteMapping("/admin/road_view/{roadViewId}")
+    public ApiResponse<Void> deleteRoadView(@PathVariable(name = "roadViewId") Long roadViewId) {
+
+        roadViewUseCase.deleteRoadView(roadViewId);
+
+        return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_DELETE_SUCCESS.getMessage());
+    }
 
 }

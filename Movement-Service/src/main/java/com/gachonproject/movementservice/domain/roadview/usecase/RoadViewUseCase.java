@@ -4,6 +4,7 @@ import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewSav
 import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewUpdateDto;
 import com.gachonproject.movementservice.domain.roadview.dto.response.RoadViewDetailDto;
 import com.gachonproject.movementservice.domain.roadview.entity.RoadView;
+import com.gachonproject.movementservice.domain.roadview.service.RoadViewDeleteService;
 import com.gachonproject.movementservice.domain.roadview.service.RoadViewGetService;
 import com.gachonproject.movementservice.domain.roadview.service.RoadViewSaveService;
 import com.gachonproject.movementservice.domain.roadview.service.RoadViewUpdateService;
@@ -22,6 +23,7 @@ public class RoadViewUseCase {
     private final RoadViewSaveService roadViewSaveService;
     private final RoadViewGetService roadViewGetService;
     private final RoadViewUpdateService roadViewUpdateService;
+    private final RoadViewDeleteService roadViewDeleteService;
 
     public void saveRoadView(RoadViewSaveDto dto) {
 
@@ -53,6 +55,14 @@ public class RoadViewUseCase {
         RoadView roadView = roadViewGetService.findRoadView(dto.roadViewId());
 
         roadViewUpdateService.updateRoadView(roadView, dto);
+    }
+
+    @Transactional
+    public void deleteRoadView(Long roadViewId) {
+
+        RoadView findRoadView = roadViewGetService.findRoadView(roadViewId);
+
+        roadViewDeleteService.delete(findRoadView);
     }
 
 }
