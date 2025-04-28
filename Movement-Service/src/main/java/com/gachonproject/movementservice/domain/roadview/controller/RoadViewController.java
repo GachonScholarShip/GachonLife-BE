@@ -2,17 +2,17 @@ package com.gachonproject.movementservice.domain.roadview.controller;
 
 
 import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewSaveDto;
+import com.gachonproject.movementservice.domain.roadview.dto.response.RoadViewDetailDto;
 import com.gachonproject.movementservice.domain.roadview.entity.RoadView;
 import com.gachonproject.movementservice.domain.roadview.repository.RoadViewRepository;
 import com.gachonproject.movementservice.domain.roadview.usecase.RoadViewUseCase;
 import com.gachonproject.movementservice.global.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.gachonproject.movementservice.domain.roadview.controller.enums.SuccessMessage.ROAD_VIEW_CREATE_SUCCESS;
+import static com.gachonproject.movementservice.domain.roadview.controller.enums.SuccessMessage.ROAD_VIEW_DETAIL_SUCCESS;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +27,14 @@ public class RoadViewController {
 
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_CREATE_SUCCESS.getMessage());
     }
+
+    @GetMapping("/member/road_view/{end_point}")
+    public ApiResponse<RoadViewDetailDto> getRoadView(@PathVariable(name = "end_point") String endPoint) {
+
+        RoadViewDetailDto response = roadViewUseCase.getRoadViewDetail(endPoint);
+
+        return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_DETAIL_SUCCESS.getMessage(), response);
+    }
+
 
 }

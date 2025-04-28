@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface RoadViewRepository extends JpaRepository<RoadView, Long> {
 
     Optional<RoadView> findRoadViewByEndPoint(String entPoint);
+
 }
