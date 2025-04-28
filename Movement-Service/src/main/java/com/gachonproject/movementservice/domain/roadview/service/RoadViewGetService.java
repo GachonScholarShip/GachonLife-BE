@@ -7,7 +7,10 @@ import com.gachonproject.movementservice.domain.roadview.exception.DuplicatedRoa
 import com.gachonproject.movementservice.domain.roadview.exception.RoadViewNotFoundException;
 import com.gachonproject.movementservice.domain.roadview.repository.RoadViewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +26,10 @@ public class RoadViewGetService {
     public RoadView findRoadView(String endPoint) {
         return roadViewRepository.findRoadViewByEndPoint(endPoint)
                 .orElseThrow(RoadViewNotFoundException::new);
+    }
+
+    public List<RoadView> findRoadViewList(Pageable pageable) {
+        return roadViewRepository.findRoadViewAll(pageable);
     }
 
 }

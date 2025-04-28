@@ -11,8 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gachonproject.movementservice.domain.roadview.controller.enums.SuccessMessage.ROAD_VIEW_CREATE_SUCCESS;
-import static com.gachonproject.movementservice.domain.roadview.controller.enums.SuccessMessage.ROAD_VIEW_DETAIL_SUCCESS;
+import java.util.List;
+
+import static com.gachonproject.movementservice.domain.roadview.controller.enums.SuccessMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +35,17 @@ public class RoadViewController {
         RoadViewDetailDto response = roadViewUseCase.getRoadViewDetail(endPoint);
 
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_DETAIL_SUCCESS.getMessage(), response);
+    }
+
+    @GetMapping("/member/road_view")
+    public ApiResponse<List<RoadViewDetailDto>> getRoadViews(
+            @RequestParam(defaultValue = "0", required = false) int pageNum,
+            @RequestParam(defaultValue = "10", required = false) int pageSize
+    ) {
+
+        List<RoadViewDetailDto> response = roadViewUseCase.getRoadViewList(pageNum, pageSize);
+
+        return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_LIST_SUCCESS.getMessage(), response);
     }
 
 
