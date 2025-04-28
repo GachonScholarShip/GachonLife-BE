@@ -1,12 +1,11 @@
 package com.gachonproject.movementservice.domain.roadview.service;
 
-import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewSaveDto;
-import com.gachonproject.movementservice.domain.roadview.dto.response.RoadViewDetailDto;
 import com.gachonproject.movementservice.domain.roadview.entity.RoadView;
 import com.gachonproject.movementservice.domain.roadview.exception.DuplicatedRoadViewException;
 import com.gachonproject.movementservice.domain.roadview.exception.RoadViewNotFoundException;
 import com.gachonproject.movementservice.domain.roadview.repository.RoadViewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,10 @@ public class RoadViewGetService {
 
     public void checkDuplicatedRoadView(String endPoint) {
         roadViewRepository.findRoadViewByEndPoint(endPoint)
-                .orElseThrow(DuplicatedRoadViewException::new);
+                .ifPresent(roadView -> {
+                    throw new DuplicatedRoadViewException();
+                });
+
     }
 
     public RoadView findRoadView(Long roadViewId) {
@@ -33,8 +35,8 @@ public class RoadViewGetService {
                 .orElseThrow(RoadViewNotFoundException::new);
     }
 
-    public List<RoadView> findRoadViewList(Pageable pageable) {
-        return roadViewRepository.findRoadViewAll(pageable);
+    public Page<RoadView> findRoadViewList(Pageable pageable) {
+        return roadViewRepository.findAll(pageable);
     }
 
 }
