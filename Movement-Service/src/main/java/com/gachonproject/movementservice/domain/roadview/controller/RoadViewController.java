@@ -9,6 +9,7 @@ import com.gachonproject.movementservice.domain.roadview.repository.RoadViewRepo
 import com.gachonproject.movementservice.domain.roadview.usecase.RoadViewUseCase;
 import com.gachonproject.movementservice.global.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class RoadViewController {
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_DETAIL_SUCCESS.getMessage(), response);
     }
 
-    @GetMapping("/member/roadView")
+    @GetMapping("/member/road_view")
     public ApiResponse<List<RoadViewDetailDto>> getRoadViews(
             @RequestParam(defaultValue = "0", required = false) int pageNum,
             @RequestParam(defaultValue = "10", required = false) int pageSize
