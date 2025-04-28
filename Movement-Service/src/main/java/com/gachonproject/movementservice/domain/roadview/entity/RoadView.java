@@ -1,6 +1,7 @@
 package com.gachonproject.movementservice.domain.roadview.entity;
 
 import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewSaveDto;
+import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewUpdateDto;
 import com.gachonproject.movementservice.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,11 @@ public class RoadView extends BaseEntity {
                 .endPoint(dto.endPoint())
                 .url(dto.url())
                 .build();
+    }
+
+    public void updateRoadView(RoadViewUpdateDto dto) {
+        this.endPoint = dto.endPoint();
+        this.url = dto.url();
     }
 
 }

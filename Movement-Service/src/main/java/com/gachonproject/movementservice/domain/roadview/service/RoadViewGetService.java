@@ -23,6 +23,11 @@ public class RoadViewGetService {
                 .orElseThrow(DuplicatedRoadViewException::new);
     }
 
+    public RoadView findRoadView(Long roadViewId) {
+        return roadViewRepository.findById(roadViewId)
+                .orElseThrow(RoadViewNotFoundException::new);
+    }
+
     public RoadView findRoadView(String endPoint) {
         return roadViewRepository.findRoadViewByEndPoint(endPoint)
                 .orElseThrow(RoadViewNotFoundException::new);

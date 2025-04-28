@@ -2,6 +2,7 @@ package com.gachonproject.movementservice.domain.roadview.controller;
 
 
 import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewSaveDto;
+import com.gachonproject.movementservice.domain.roadview.dto.request.RoadViewUpdateDto;
 import com.gachonproject.movementservice.domain.roadview.dto.response.RoadViewDetailDto;
 import com.gachonproject.movementservice.domain.roadview.entity.RoadView;
 import com.gachonproject.movementservice.domain.roadview.repository.RoadViewRepository;
@@ -46,6 +47,14 @@ public class RoadViewController {
         List<RoadViewDetailDto> response = roadViewUseCase.getRoadViewList(pageNum, pageSize);
 
         return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_LIST_SUCCESS.getMessage(), response);
+    }
+
+    @PatchMapping("/admin/road_view")
+    public ApiResponse<Void> updateRoadView(@RequestBody RoadViewUpdateDto dto) {
+
+        roadViewUseCase.updateRoadView(dto);
+
+        return ApiResponse.response(HttpStatus.OK, ROAD_VIEW_UPDATE_SUCCESS.getMessage());
     }
 
 
