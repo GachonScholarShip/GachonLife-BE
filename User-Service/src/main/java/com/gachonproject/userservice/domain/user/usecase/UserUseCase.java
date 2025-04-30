@@ -47,4 +47,9 @@ public class UserUseCase {
         return !userGetService.validateLoginId(loginId);
     }
 
+    public boolean checkStudentId(String studentId){
+        // 이미 존재하는 경우
+        return !userGetService.validateStudentId(studentId);
+    }
+
 }

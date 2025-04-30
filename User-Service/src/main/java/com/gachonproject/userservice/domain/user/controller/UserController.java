@@ -52,4 +52,14 @@ public class UserController {
 
         return ApiResponse.response(OK, LOGIN_ID_INVALIDATE.getMessage(), false);
     }
+
+    @GetMapping("/normal/student_id/{studentId}")
+    public ApiResponse<Boolean> checkStudentId(@PathVariable String studentId) {
+
+        if (userUseCase.checkStudentId(studentId)) {
+            return ApiResponse.response(OK, STUDENT_ID_VALIDATE.getMessage(), true);
+        }
+
+        return ApiResponse.response(OK, STUDENT_ID_INVALIDATE.getMessage(), false);
+    }
 }
