@@ -18,41 +18,39 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // response format
-    private static final String LOG_FORMAT = "Class: {}, Code : {}, Message : {}";
+    private static final String LOG_FORMAT      = "Class: {}, Status: {}, Message: {}";
     private static final String VALID_EXCEPTION = "Validation failed";
 
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<ApiResponse<Void>> handleException(BaseException e) {
-        return exceptionResponse(e, e.getStatus(), e.getMessage(), null);
+    public ResponseEntity<ApiResponse<Void>> handleBase(BaseException e) {
+        log.warn(LOG_FORMAT, e.getClass().getSimpleName(), e.getStatus(), e.getMessage());
+        return ResponseEntity
+                .status(e.getStatus())
+                .body(ApiResponse.response(e.getStatus(), e.getMessage()));
     }
 
-    // BindException 처리
-    @ExceptionHandler({BindException.class})
-    public ResponseEntity<ApiResponse<List<ErrorResponse>>> handleException(MethodArgumentNotValidException e) {
-        List<ErrorResponse> validErrorResponses = e.getBindingResult().getFieldErrors().stream()
-                .map(fieldError -> ErrorResponse.builder()
-                        .errorField(fieldError.getField())
-                        .errorMessage(fieldError.getDefaultMessage())
-                        .inputValue(fieldError.getRejectedValue())
-                        .build()
-                ).toList();
+    @ExceptionHandler({ MethodArgumentNotValidException.class, BindException.class })
+    public ResponseEntity<ApiResponse<List<ErrorResponse>>> handleValidation(Exception e) {
+        List<ErrorResponse> errors = ((BindException) e).getBindingResult()
+                .getFieldErrors().stream()
+                .map(fe -> ErrorResponse.builder()
+                        .errorField(fe.getField())
+                        .errorMessage(fe.getDefaultMessage())
+                        .inputValue(fe.getRejectedValue())
+                        .build())
+                .toList();
 
-        return exceptionResponse(e, BAD_REQUEST, VALID_EXCEPTION ,validErrorResponses);
+        log.warn(LOG_FORMAT, e.getClass().getSimpleName(), BAD_REQUEST, VALID_EXCEPTION);
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body(ApiResponse.response(BAD_REQUEST, VALID_EXCEPTION, errors));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> handleException(Exception e) {
-        return exceptionResponse(e, INTERNAL_SERVER_ERROR, e.getMessage(), null);
-    }
-
-    // 실제 예외 처리 (log + 응답)
-    private <T> ResponseEntity<ApiResponse<T>> exceptionResponse(Exception e, HttpStatus status, String message, T data) {
-        log.warn(LOG_FORMAT, e.getClass().getSimpleName(), status, message);
-        ApiResponse<T> response = ApiResponse.response(status, message, data);
-
+    public ResponseEntity<ApiResponse<Void>> handleOther(Exception e) {
+        log.error(LOG_FORMAT, e.getClass().getSimpleName(), INTERNAL_SERVER_ERROR, e.getMessage());
         return ResponseEntity
-                .status(status)
-                .body(response);
+                .status(INTERNAL_SERVER_ERROR)
+                .body(ApiResponse.response(INTERNAL_SERVER_ERROR, e.getMessage()));
     }
 }
