@@ -28,7 +28,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     // 인증 예외 (모든 사용자 접근 허용)
     private static final List<String> whiteList = List.of(
-            "/signin", "/signup", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**"
+            "/normal/**", "/signin", "/signup", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**"
     );
 
     // USER 접근 허용 경로 (ADMIN도 허용)
