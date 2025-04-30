@@ -8,6 +8,10 @@ import lombok.Getter;
 public enum ResponseMessage {
 
     // UserController
+    STUDENT_ID_VALIDATE("사용 가능한 학번입니다."),
+    STUDENT_ID_INVALIDATE("이미 사용중인 학번입니다."),
+    LOGIN_ID_VALIDATE("사용 가능한 아이디입니다."),
+    LOGIN_ID_INVALIDATE("이미 사용중인 아이디입니다."),
     USER_LIST_SUCCESS("사용자 목록을 반환합니다. "),
     USER_UPDATE_SUCCESS("사용자 정보를 수정했습니다."),
     USER_DELETE_SUCCESS("사용자를 삭제(회원탈퇴)했습니다."),

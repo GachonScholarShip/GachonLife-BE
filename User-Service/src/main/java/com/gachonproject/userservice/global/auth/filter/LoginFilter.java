@@ -1,6 +1,7 @@
 package com.gachonproject.userservice.global.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gachonproject.userservice.domain.user.dto.response.LoginResponseDto;
 import com.gachonproject.userservice.global.auth.dto.LoginRequest;
 import com.gachonproject.userservice.global.auth.jwt.CustomUserDetails;
 import com.gachonproject.userservice.global.auth.util.JwtProvider;
@@ -28,6 +29,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+
+    private static final String LOGIN_SUCCESS_MESSAGE = "로그인에 성공했습니다.";
+    private static final String LOGIN_FAIL_MESSAGE = "로그인에 실패했습니다.";
+
 
 
     public LoginFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
@@ -65,8 +70,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpStatus.OK.value());
 
+        LoginResponseDto data = LoginResponseDto.from(userRole);
+
         response.getWriter().write(new ObjectMapper().writeValueAsString(
-                ApiResponse.response(HttpStatus.OK, "로그인 성공!"))
+                ApiResponse.response(HttpStatus.OK, LOGIN_SUCCESS_MESSAGE, data))
         );
     }
 
@@ -79,7 +86,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setContentType("application/json"); // 응답을 JSON으로
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(
-                ApiResponse.response(HttpStatus.UNAUTHORIZED, "로그인 실패")
+                ApiResponse.response(HttpStatus.UNAUTHORIZED, LOGIN_FAIL_MESSAGE)
         ));
     }
 
@@ -87,6 +94,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
-        return  auth.getAuthority();
+        return auth.getAuthority();
     }
 }
