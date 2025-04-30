@@ -13,13 +13,12 @@ import static com.gachonproject.userservice.domain.user.controller.enums.Respons
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserUseCase userUseCase;
 
-    @GetMapping("/user")
+    @GetMapping("/admin/user")
     public ApiResponse<List<UserResponseDto>> getUserList(@RequestParam(defaultValue = "0", required = false) int pageNum,
                                                           @RequestParam(defaultValue = "5", required = false) int pageSize) {
 
@@ -28,7 +27,7 @@ public class UserController {
         return ApiResponse.response(OK, USER_LIST_SUCCESS.getMessage(), response);
     }
 
-    @PatchMapping("/user")
+    @PatchMapping("/admin/user")
     public ApiResponse<Void> updateUser(@RequestBody UserUpdateDto dto) {
 
         userUseCase.updateUser(dto);
@@ -36,7 +35,7 @@ public class UserController {
         return ApiResponse.response(OK, USER_UPDATE_SUCCESS.getMessage());
     }
 
-    @DeleteMapping("/user/{userId}")
+    @DeleteMapping("/admin/user/{userId}")
     public ApiResponse<Void> deleteUser(@PathVariable Long userId) {
 
         userUseCase.deleteUser(userId);
@@ -44,4 +43,13 @@ public class UserController {
         return ApiResponse.response(OK, USER_DELETE_SUCCESS.getMessage());
     }
 
+    @GetMapping("/normal/login_id/{loginId}")
+    public ApiResponse<Boolean> checkLoginId(@PathVariable String loginId) {
+
+        if (userUseCase.checkLoginId(loginId)) {
+            return ApiResponse.response(OK, LOGIN_ID_VALIDATE.getMessage(), true);
+        }
+
+        return ApiResponse.response(OK, LOGIN_ID_INVALIDATE.getMessage(), false);
+    }
 }
