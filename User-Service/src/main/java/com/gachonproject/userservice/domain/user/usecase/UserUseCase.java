@@ -19,8 +19,8 @@ public class UserUseCase {
     private final UserDeleteService userDeleteService;
 
     @Transactional(readOnly = true)
-    public List<UserResponseDto> findUserList(int pageNumber, int pageSize) {
-        return userGetService.findUserList(pageNumber, pageSize)
+    public List<UserResponseDto> findUserList(int pageNum, int pageSize) {
+        return userGetService.findUserList(pageNum, pageSize)
                 .stream()
                 .map(UserResponseDto::from)
                 .toList();

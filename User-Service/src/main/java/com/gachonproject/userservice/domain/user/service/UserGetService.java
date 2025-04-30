@@ -29,8 +29,8 @@ public class UserGetService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public List<User> findUserList(int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public List<User> findUserList(int pageNum, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
         return userRepository.findAll(pageable).getContent();
     }
 
