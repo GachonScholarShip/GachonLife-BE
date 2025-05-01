@@ -56,6 +56,17 @@ public class BuildingAdminController {
         );
     }
 
+    @PatchMapping("/{id}")
+    public ApiResponse<BuildingDto> patchUpdate(
+            @PathVariable Long id,
+            @Valid @RequestBody BuildingRequest req
+    ) {
+        return ApiResponse.response(HttpStatus.OK,
+                "건물 수정 성공",
+                service.update(id, req));
+    }
+
+
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         service.delete(id);
