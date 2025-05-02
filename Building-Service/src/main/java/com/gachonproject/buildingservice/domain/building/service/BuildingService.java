@@ -1,7 +1,7 @@
-package com.gachonproject.buildingservice.service;
+package com.gachonproject.buildingservice.domain.building.service;
 
-import com.gachonproject.buildingservice.dto.BuildingDto;
-import com.gachonproject.buildingservice.dto.BuildingRequest;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingDto;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingRequest;
 import java.util.List;
 
 public interface    BuildingService {

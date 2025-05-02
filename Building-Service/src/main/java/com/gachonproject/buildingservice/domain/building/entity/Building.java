@@ -1,4 +1,4 @@
-package com.gachonproject.buildingservice.domain;
+package com.gachonproject.buildingservice.domain.building.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
