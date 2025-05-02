@@ -50,6 +50,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @Transactional
     public BuildingDto update(Long id, BuildingRequest req) {
         Building b = repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 건물이 없습니다: " + id));
