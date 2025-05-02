@@ -10,5 +10,7 @@ public class BuildingDto {
     private Long id;
     private String buildingName;
     private List<String> floors;
+    private String topFloor;
+    private String bottomFloor;
     private Boolean isPublic;
 }

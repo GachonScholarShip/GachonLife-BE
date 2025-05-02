@@ -5,12 +5,16 @@ import com.gachonproject.buildingservice.dto.BuildingDto;
 import com.gachonproject.buildingservice.dto.BuildingRequest;
 import com.gachonproject.buildingservice.repository.BuildingRepository;
 import com.gachonproject.buildingservice.service.BuildingService;
+import com.gachonproject.buildingservice.util.FloorFormatter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;  // 추가
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -55,7 +59,6 @@ public class BuildingServiceImpl implements BuildingService {
         Building b = repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 건물이 없습니다: " + id));
 
-
         b.setBuildingName(req.getBuildingName());
         b.setTopFloor(req.getTopFloor());
         b.setBottomFloor(req.getBottomFloor());
@@ -74,11 +77,27 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     private BuildingDto toDto(Building b) {
+        int bottom = b.getBottomFloor();
+        int top    = b.getTopFloor();
+
+        // 1) 바닥~최고층 모든 층 생성
+        List<String> floorsList = IntStream
+                .rangeClosed(bottom, top)
+                .mapToObj(FloorFormatter::format)
+                .collect(Collectors.toList());
+
+        // 2) DTO 필드용 포맷팅
+        String topStr    = FloorFormatter.format(top);    // 최고층
+        String bottomStr = FloorFormatter.format(bottom); // 최하층
+
+        // 3) 생성자 인자 순서에 맞춰 topStr, bottomStr 를 바꿔서 전달
         return new BuildingDto(
-                b.getId(),
-                b.getBuildingName(),
-                b.getFloors(),
-                b.getIsPublic()
+                b.getId(),             // Long
+                b.getBuildingName(),   // String
+                floorsList,            // List<String>
+                topStr,                // topFloor
+                bottomStr,             // bottomFloor
+                b.getIsPublic()        // Boolean
         );
     }
 }
