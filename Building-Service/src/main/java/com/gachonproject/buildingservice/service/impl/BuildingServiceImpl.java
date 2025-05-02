@@ -8,17 +8,19 @@ import com.gachonproject.buildingservice.service.BuildingService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;  // 추가
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BuildingServiceImpl implements BuildingService {
 
     private final BuildingRepository repo;
 
     @Override
+    @Transactional(readOnly = true)
     public List<BuildingDto> getAll() {
         return repo.findAll().stream()
                 .map(this::toDto)
@@ -26,6 +28,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BuildingDto getByName(String buildingName) {
         Building b = repo.findByBuildingName(buildingName)
                 .orElseThrow(() -> new EntityNotFoundException("건물을 찾을 수 없습니다: " + buildingName));
@@ -50,13 +53,15 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingDto update(Long id, BuildingRequest req) {
         Building b = repo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 ID의 건물이 없습니다: " + id));
+
+
         b.setBuildingName(req.getBuildingName());
         b.setTopFloor(req.getTopFloor());
         b.setBottomFloor(req.getBottomFloor());
         b.setIsPublic(req.getIsPublic());
         b.setUpdatedAt(LocalDateTime.now());
-        Building updated = repo.save(b);
-        return toDto(updated);
+
+        return toDto(b);
     }
 
     @Override
