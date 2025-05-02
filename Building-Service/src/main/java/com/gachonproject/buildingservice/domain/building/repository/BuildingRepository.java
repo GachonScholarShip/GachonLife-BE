@@ -1,6 +1,6 @@
-package com.gachonproject.buildingservice.repository;
+package com.gachonproject.buildingservice.domain.building.repository;
 
-import com.gachonproject.buildingservice.domain.Building;
+import com.gachonproject.buildingservice.domain.building.entity.Building;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

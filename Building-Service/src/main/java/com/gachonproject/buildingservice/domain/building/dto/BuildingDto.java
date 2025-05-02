@@ -1,4 +1,4 @@
-package com.gachonproject.buildingservice.dto;
+package com.gachonproject.buildingservice.domain.building.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

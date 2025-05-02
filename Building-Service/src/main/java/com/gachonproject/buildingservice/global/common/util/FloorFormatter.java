@@ -1,4 +1,4 @@
-package com.gachonproject.buildingservice.util;
+package com.gachonproject.buildingservice.global.common.util;
 
 public class FloorFormatter {
 

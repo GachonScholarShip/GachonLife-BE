@@ -1,4 +1,4 @@
-package com.gachonproject.buildingservice.controller;
+package com.gachonproject.buildingservice.domain.building.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

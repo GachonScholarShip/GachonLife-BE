@@ -1,11 +1,11 @@
-package com.gachonproject.buildingservice.service.impl;
+package com.gachonproject.buildingservice.domain.building.service.impl;
 
-import com.gachonproject.buildingservice.domain.Building;
-import com.gachonproject.buildingservice.dto.BuildingDto;
-import com.gachonproject.buildingservice.dto.BuildingRequest;
-import com.gachonproject.buildingservice.repository.BuildingRepository;
-import com.gachonproject.buildingservice.service.BuildingService;
-import com.gachonproject.buildingservice.util.FloorFormatter;
+import com.gachonproject.buildingservice.domain.building.entity.Building;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingDto;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingRequest;
+import com.gachonproject.buildingservice.domain.building.repository.BuildingRepository;
+import com.gachonproject.buildingservice.domain.building.service.BuildingService;
+import com.gachonproject.buildingservice.global.common.util.FloorFormatter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

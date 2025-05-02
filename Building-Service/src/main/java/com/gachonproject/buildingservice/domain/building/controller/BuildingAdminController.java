@@ -1,8 +1,8 @@
-package com.gachonproject.buildingservice.controller;
+package com.gachonproject.buildingservice.domain.building.controller;
 
-import com.gachonproject.buildingservice.dto.BuildingDto;
-import com.gachonproject.buildingservice.dto.BuildingRequest;
-import com.gachonproject.buildingservice.service.BuildingService;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingDto;
+import com.gachonproject.buildingservice.domain.building.dto.BuildingRequest;
+import com.gachonproject.buildingservice.domain.building.service.BuildingService;
 import com.gachonproject.buildingservice.global.common.response.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
