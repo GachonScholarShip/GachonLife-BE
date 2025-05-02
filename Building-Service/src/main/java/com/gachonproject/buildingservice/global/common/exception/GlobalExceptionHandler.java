@@ -49,6 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleOther(Exception e) {
         log.error(LOG_FORMAT, e.getClass().getSimpleName(), INTERNAL_SERVER_ERROR, e.getMessage());
+        log.error(e.getMessage(), e);
         return ResponseEntity
                 .status(INTERNAL_SERVER_ERROR)
                 .body(ApiResponse.response(INTERNAL_SERVER_ERROR, e.getMessage()));
