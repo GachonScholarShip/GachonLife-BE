@@ -1,6 +1,7 @@
 package com.gachonproject.movementservice.domain.qrcode.entity;
 
 
+import com.gachonproject.movementservice.domain.qrcode.dto.QrCodeDetailDto;
 import com.gachonproject.movementservice.domain.qrcode.dto.QrCodeDto;
 import com.gachonproject.movementservice.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -29,7 +30,7 @@ public class QrCode extends BaseEntity {
                 .build();
     }
 
-    public void updateField(QrCodeDto dto) {
+    public void updateField(QrCodeDetailDto dto) {
         this.buildingName = dto.buildingName();
         this.imageUrl = dto.imageUrl();
     }

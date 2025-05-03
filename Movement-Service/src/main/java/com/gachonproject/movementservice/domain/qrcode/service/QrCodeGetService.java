@@ -23,4 +23,9 @@ public class QrCodeGetService {
         return qrCodeRepository.findByBuildingName(buildingName)
                 .orElseThrow(QrCodeNotFoundException::new);
     }
+
+    public QrCode findByQrCodeId(Long qrCodeId) {
+        return qrCodeRepository.findById(qrCodeId)
+                .orElseThrow(QrCodeNotFoundException::new);
+    }
 }

@@ -1,5 +1,6 @@
 package com.gachonproject.movementservice.domain.qrcode.controller;
 
+import com.gachonproject.movementservice.domain.qrcode.dto.QrCodeDetailDto;
 import com.gachonproject.movementservice.domain.qrcode.dto.QrCodeDto;
 import com.gachonproject.movementservice.domain.qrcode.usecase.QrCodeUseCase;
 import com.gachonproject.movementservice.global.common.response.ApiResponse;
@@ -24,18 +25,26 @@ public class QrCodeController {
     }
 
     @GetMapping("/member/qrcode/{buildingName}")
-    public ApiResponse<QrCodeDto> getQrCode(@PathVariable String buildingName) {
+    public ApiResponse<QrCodeDetailDto> getQrCode(@PathVariable String buildingName) {
 
-        QrCodeDto response = qrCodeUseCase.getQrCode(buildingName);
+        QrCodeDetailDto response = qrCodeUseCase.getQrCode(buildingName);
 
         return ApiResponse.response(HttpStatus.OK, QRCODE_GET_SUCCESS.getMessage(), response);
     }
 
     @PatchMapping("/admin/qrcode")
-    public ApiResponse<Void> updateQrCode(@RequestBody QrCodeDto dto) {
+    public ApiResponse<Void> updateQrCode(@RequestBody QrCodeDetailDto dto) {
 
         qrCodeUseCase.updateQrCode(dto);
 
         return ApiResponse.response(HttpStatus.OK, QRCODE_UPDATE_SUCCESS.getMessage());
+    }
+
+    @DeleteMapping("/admin/qrcode/{qrCodeId}")
+    public ApiResponse<Void> deleteQrCode(@PathVariable Long qrCodeId) {
+
+        qrCodeUseCase.deleteQrCode(qrCodeId);
+
+        return ApiResponse.response(HttpStatus.OK, QRCODE_DELETE_SUCCESS.getMessage());
     }
 }
