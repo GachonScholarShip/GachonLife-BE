@@ -1,15 +1,15 @@
-package com.gachonproject.movementservice.domain.qrcode.dto.response;
+package com.gachonproject.movementservice.domain.qrcode.dto;
 
 import com.gachonproject.movementservice.domain.qrcode.entity.QrCode;
 import lombok.Builder;
 
 @Builder
-public record QrCodeDetailDto(
+public record QrCodeDto(
         String buildingName,
         String imageUrl
 ) {
-    public static QrCodeDetailDto from(QrCode qrCode) {
-        return QrCodeDetailDto.builder()
+    public static QrCodeDto from(QrCode qrCode) {
+        return QrCodeDto.builder()
                 .buildingName(qrCode.getBuildingName())
                 .imageUrl(qrCode.getImageUrl())
                 .build();
