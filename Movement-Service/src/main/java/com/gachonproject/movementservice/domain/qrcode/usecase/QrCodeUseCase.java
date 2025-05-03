@@ -7,7 +7,10 @@ import com.gachonproject.movementservice.domain.qrcode.service.QrCodeDeleteServi
 import com.gachonproject.movementservice.domain.qrcode.service.QrCodeGetService;
 import com.gachonproject.movementservice.domain.qrcode.service.QrCodeSaveService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,16 @@ public class QrCodeUseCase {
         QrCode findQrCode = qrCodeGetService.findByBuildingName(buildingName);
 
         return QrCodeDetailDto.from(findQrCode);
+    }
+
+    public List<QrCodeDetailDto> getQrCodeList(int pageNum, int pageSize) {
+
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+
+        return qrCodeGetService.findQrCodeList(pageRequest)
+                .stream()
+                .map(QrCodeDetailDto::from)
+                .toList();
     }
 
     public void updateQrCode(QrCodeDetailDto dto) {
