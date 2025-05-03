@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gachonproject.movementservice.domain.qrcode.controller.enums.SuccessMessage.QRCODE_CREATE_SUCCESS;
-import static com.gachonproject.movementservice.domain.qrcode.controller.enums.SuccessMessage.QRCODE_GET_SUCCESS;
+import static com.gachonproject.movementservice.domain.qrcode.controller.enums.SuccessMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +34,8 @@ public class QrCodeController {
     @PatchMapping("/admin/qrcode")
     public ApiResponse<Void> updateQrCode(@RequestBody QrCodeDto dto) {
 
+        qrCodeUseCase.updateQrCode(dto);
 
-
+        return ApiResponse.response(HttpStatus.OK, QRCODE_UPDATE_SUCCESS.getMessage());
     }
 }
