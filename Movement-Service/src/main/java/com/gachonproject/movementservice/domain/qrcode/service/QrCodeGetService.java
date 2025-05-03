@@ -1,6 +1,8 @@
 package com.gachonproject.movementservice.domain.qrcode.service;
 
+import com.gachonproject.movementservice.domain.qrcode.entity.QrCode;
 import com.gachonproject.movementservice.domain.qrcode.exception.DuplicatedBuildingNameException;
+import com.gachonproject.movementservice.domain.qrcode.exception.QrCodeNotFoundException;
 import com.gachonproject.movementservice.domain.qrcode.repository.QrCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +17,10 @@ public class QrCodeGetService {
         if(qrCodeRepository.existsByBuildingName(buildingName)){
             throw new DuplicatedBuildingNameException();
         }
+    }
+
+    public QrCode findByBuildingName(String buildingName) {
+        return qrCodeRepository.findByBuildingName(buildingName)
+                .orElseThrow(QrCodeNotFoundException::new);
     }
 }

@@ -1,6 +1,7 @@
 package com.gachonproject.movementservice.domain.qrcode.usecase;
 
 import com.gachonproject.movementservice.domain.qrcode.dto.request.QrCodeSaveDto;
+import com.gachonproject.movementservice.domain.qrcode.dto.response.QrCodeDetailDto;
 import com.gachonproject.movementservice.domain.qrcode.entity.QrCode;
 import com.gachonproject.movementservice.domain.qrcode.repository.QrCodeRepository;
 import com.gachonproject.movementservice.domain.qrcode.service.QrCodeDeleteService;
@@ -20,6 +21,13 @@ public class QrCodeUseCase {
     public void createQrCode(QrCodeSaveDto dto) {
         qrCodeGetService.isDuplicatedBuildinName(dto.buildingName());
         qrCodeSaveService.saveQrCode(dto);
+    }
+
+    public QrCodeDetailDto getQrCode(String buildingName) {
+
+        QrCode findQrCode = qrCodeGetService.findByBuildingName(buildingName);
+
+        return QrCodeDetailDto.from(findQrCode);
     }
 
 }
