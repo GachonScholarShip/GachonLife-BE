@@ -38,7 +38,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     // ADMIN만 접근 허용
     private static final List<String> adminOnlyList = List.of(
-            "/admin/**"
+            "/admin/**", "/image/**"
     );
 
 
