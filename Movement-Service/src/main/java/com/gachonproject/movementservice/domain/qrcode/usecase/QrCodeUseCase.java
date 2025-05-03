@@ -9,6 +9,7 @@ import com.gachonproject.movementservice.domain.qrcode.service.QrCodeSaveService
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class QrCodeUseCase {
                 .toList();
     }
 
+    @Transactional
     public void updateQrCode(QrCodeDetailDto dto) {
         qrCodeGetService.isDuplicatedBuildinName(dto.buildingName());
 
