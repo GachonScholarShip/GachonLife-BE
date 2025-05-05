@@ -21,7 +21,7 @@ public class  Classes {
     @Column(name = "code", nullable = false, unique = true)
     private String code;
 
-z
+
     @Column(name = "title", nullable = false)
     private String title;
 
