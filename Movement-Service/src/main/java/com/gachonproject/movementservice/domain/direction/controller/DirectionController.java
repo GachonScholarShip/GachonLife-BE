@@ -27,4 +27,12 @@ public class DirectionController {
         return ApiResponse.response(HttpStatus.OK, DIRECTION_SAVE_SUCCESS.getMessage());
     }
 
+    @GetMapping("/member/direction/{endPoint}")
+    public ApiResponse<DirectionDetailDto> getDirection(@PathVariable("endPoint") String endPoint) {
+
+        DirectionDetailDto response = directionUseCase.getDirectionDetail(endPoint);
+
+        return ApiResponse.response(HttpStatus.OK, DIRECTION_DETAIL_GET_SUCCESS.getMessage(), response);
+    }
+
 }

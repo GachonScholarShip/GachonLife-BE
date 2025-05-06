@@ -29,4 +29,9 @@ public class DirectionUseCase {
         directionSaveService.save(dto);
     }
 
+    public DirectionDetailDto getDirectionDetail(String endPoint) {
+        Direction findDirection = directionGetService.getDirection(endPoint);
+        return DirectionDetailDto.from(findDirection);
+    }
+
 }
