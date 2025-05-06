@@ -44,4 +44,10 @@ public class DirectionUseCase {
                 .toList();
     }
 
+    @Transactional
+    public void updateDirection(DirectionUpdateDto dto) {
+        Direction findDirection = directionGetService.getDirectionById(dto.id());
+        findDirection.update(dto);
+    }
+
 }

@@ -46,4 +46,12 @@ public class DirectionController {
         return ApiResponse.response(HttpStatus.OK, DIRECTION_LIST_GET_SUCCESS.getMessage(), response);
     }
 
+    @PatchMapping("/admin/direction")
+    public ApiResponse<Void> updateDirection(@RequestBody DirectionUpdateDto dto) {
+
+        directionUseCase.updateDirection(dto);
+
+        return ApiResponse.response(HttpStatus.OK, DIRECTION_UPDATE_SUCCESS.getMessage());
+    }
+
 }
