@@ -11,13 +11,13 @@ import java.util.List;
 
 @RestController
 // 변경된 RequestMapping 경로
-@RequestMapping("/building-service/classes/v1/classes")
+@RequestMapping("/member/classes")
 @RequiredArgsConstructor
 public class ClassesMemberController {
 
     private final ClassesService service;
 
-    /** 사용자 전체 조회 ⇒ GET /building-service/classes/v1/classes */
+
     @GetMapping
     public ApiResponse<List<ClassesDto>> list() {
         return ApiResponse.response(HttpStatus.OK,
@@ -25,7 +25,7 @@ public class ClassesMemberController {
                 service.getAll());
     }
 
-    /** 사용자 상세 조회 ⇒ GET /building-service/classes/v1/classes/{id} */
+
     @GetMapping("/{id}")
     public ApiResponse<ClassesDto> detail(@PathVariable Long id) {
         return ApiResponse.response(HttpStatus.OK,

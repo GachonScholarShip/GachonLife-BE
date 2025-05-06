@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/building-service/v1/admin/classes")
+@RequestMapping("/admin/classes")
 @RequiredArgsConstructor
 public class ClassesAdminController {
     private final ClassesService service;
