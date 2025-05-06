@@ -55,7 +55,7 @@ public class  Classes {
 
 
     @Column(name = "floor", nullable = false)
-    private Integer floor;
+    private String floor;
 
 
     @Column(name = "created_at", updatable = false)
