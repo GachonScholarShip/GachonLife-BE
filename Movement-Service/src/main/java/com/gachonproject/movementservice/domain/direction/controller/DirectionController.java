@@ -54,4 +54,12 @@ public class DirectionController {
         return ApiResponse.response(HttpStatus.OK, DIRECTION_UPDATE_SUCCESS.getMessage());
     }
 
+    @DeleteMapping("/admin/direction/{directionId}")
+    public ApiResponse<Void> deleteDirection(@PathVariable("directionId") Long directionId) {
+
+        directionUseCase.deleteDirection(directionId);
+
+        return ApiResponse.response(HttpStatus.OK, DIRECTION_DELETE_SUCCESS.getMessage());
+    }
+
 }

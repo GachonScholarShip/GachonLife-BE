@@ -50,4 +50,9 @@ public class DirectionUseCase {
         findDirection.update(dto);
     }
 
+    public void deleteDirection(Long id) {
+        Direction findDirection = directionGetService.getDirectionById(id);
+        directionDeleteService.delete(findDirection);
+    }
+
 }
