@@ -3,6 +3,7 @@ package com.gachonproject.movementservice.domain.direction.entity;
 import com.gachonproject.movementservice.domain.direction.dto.request.DirectionSaveDto;
 import com.gachonproject.movementservice.domain.direction.dto.request.DirectionUpdateDto;
 import com.gachonproject.movementservice.global.common.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,8 +16,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Direction extends BaseEntity {
 
+    @Column(nullable = false, length = 50)
     private String endPoint;
 
+    @Column(nullable = false, length = 512)
     private String url;
 
     public static Direction from(DirectionSaveDto dto) {
