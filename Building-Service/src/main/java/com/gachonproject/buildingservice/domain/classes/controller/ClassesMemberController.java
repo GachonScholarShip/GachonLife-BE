@@ -10,23 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/classes")      // ← 여길 바꿔주세요!
+// 변경된 RequestMapping 경로
+@RequestMapping("/building-service/classes/v1/classes")
 @RequiredArgsConstructor
 public class ClassesMemberController {
 
     private final ClassesService service;
 
-    /** 사용자용 전체 강의실 조회 */
+    /** 사용자 전체 조회 ⇒ GET /building-service/classes/v1/classes */
     @GetMapping
     public ApiResponse<List<ClassesDto>> list() {
-        List<ClassesDto> all = service.getAll();
-        return ApiResponse.response(HttpStatus.OK, "강의실 목록 조회 성공", all);
+        return ApiResponse.response(HttpStatus.OK,
+                "강의실 목록 조회 성공",
+                service.getAll());
     }
 
-    /** 사용자용 단일 강의실 상세 조회 */
+    /** 사용자 상세 조회 ⇒ GET /building-service/classes/v1/classes/{id} */
     @GetMapping("/{id}")
     public ApiResponse<ClassesDto> detail(@PathVariable Long id) {
-        ClassesDto dto = service.getById(id);
-        return ApiResponse.response(HttpStatus.OK, "강의실 상세 조회 성공", dto);
+        return ApiResponse.response(HttpStatus.OK,
+                "강의실 상세 조회 성공",
+                service.getById(id));
     }
 }
