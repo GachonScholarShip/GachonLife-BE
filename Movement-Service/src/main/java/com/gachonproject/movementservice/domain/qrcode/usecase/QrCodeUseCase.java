@@ -45,7 +45,7 @@ public class QrCodeUseCase {
 
     @Transactional
     public void updateQrCode(QrCodeDetailDto dto) {
-        qrCodeGetService.isDuplicatedBuildinName(dto.buildingName());
+        //qrCodeGetService.isDuplicatedBuildinName(dto.buildingName());
 
         QrCode findQrCode = qrCodeGetService.findByQrCodeId(dto.id());
         findQrCode.updateField(dto);
