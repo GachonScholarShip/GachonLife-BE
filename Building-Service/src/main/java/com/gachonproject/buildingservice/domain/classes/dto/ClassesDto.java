@@ -14,5 +14,5 @@ public class ClassesDto {
     private String timeSlot;
     private String buildingName;
     private String roomName;
-    private Integer floor;
+    private String floor;
 }
