@@ -34,4 +34,14 @@ public class DirectionUseCase {
         return DirectionDetailDto.from(findDirection);
     }
 
+    public List<DirectionDetailDto> getDirectionList(int pageNum, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+
+        return directionGetService.getDirectionList(pageable)
+                .stream()
+                .map(DirectionDetailDto::from)
+                .toList();
+    }
+
 }

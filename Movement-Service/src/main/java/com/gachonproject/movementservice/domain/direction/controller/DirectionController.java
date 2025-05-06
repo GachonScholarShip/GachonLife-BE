@@ -35,4 +35,15 @@ public class DirectionController {
         return ApiResponse.response(HttpStatus.OK, DIRECTION_DETAIL_GET_SUCCESS.getMessage(), response);
     }
 
+    @GetMapping("/admin/direction")
+    public ApiResponse<List<DirectionDetailDto>> getDirectionsList(
+            @RequestParam(defaultValue = "0", required = false) int pageNum,
+            @RequestParam(defaultValue = "10", required = false) int pageSize
+    ) {
+
+        List<DirectionDetailDto> response = directionUseCase.getDirectionList(pageNum, pageSize);
+
+        return ApiResponse.response(HttpStatus.OK, DIRECTION_LIST_GET_SUCCESS.getMessage(), response);
+    }
+
 }
