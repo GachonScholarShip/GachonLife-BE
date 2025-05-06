@@ -3,7 +3,9 @@ package com.gachonproject.buildingservice.domain.classes.dto;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
-@Getter @Setter @NoArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 public class ClassesRequest {
 
     @NotBlank private String code;
@@ -15,7 +17,5 @@ public class ClassesRequest {
     @NotBlank private String timeSlot;
     @NotBlank private String buildingName;
     @NotBlank private String roomName;
-
-    @NotNull @Min(-5) @Max(100)
-    private Integer floor;
+    @NotBlank private String floor;
 }
