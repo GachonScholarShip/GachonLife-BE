@@ -2,17 +2,23 @@ package com.gachonproject.buildingservice.domain.classes.service;
 
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesDto;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesRequest;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ClassesService {
 
-    // 사용자 (Member)
-    List<ClassesDto> getAll();
+    /** 페이징된 전체 조회 */
+    Page<ClassesDto> getAll(Pageable pageable);
+
+    /** 상세 조회 */
     ClassesDto getById(Long id);
 
-    // 관리자 (Admin)
+    /** 생성 */
     ClassesDto create(ClassesRequest req);
+
+    /** 수정 */
     ClassesDto update(Long id, ClassesRequest req);
+
+    /** 삭제 */
     void delete(Long id);
 }

@@ -1,17 +1,18 @@
 package com.gachonproject.buildingservice.domain.classes.service.impl;
 
-import com.gachonproject.buildingservice.domain.classes.entity.Classes;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesDto;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesRequest;
+import com.gachonproject.buildingservice.domain.classes.entity.Classes;
 import com.gachonproject.buildingservice.domain.classes.repository.ClassesRepository;
 import com.gachonproject.buildingservice.domain.classes.service.ClassesService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,16 +21,14 @@ public class ClassesServiceImpl implements ClassesService {
 
     private final ClassesRepository repo;
 
-    // ── 사용자 (Member) ──
-
+    /** 페이징된 전체 조회 */
     @Override
-    public List<ClassesDto> getAll() {
-        return repo.findAll()
-                .stream()
-                .map(this::toDto)
-                .toList();
+    public Page<ClassesDto> getAll(Pageable pageable) {
+        return repo.findAll(pageable)
+                .map(this::toDto);
     }
 
+    /** ID 로 상세 조회 */
     @Override
     public ClassesDto getById(Long id) {
         Classes cls = repo.findById(id)
@@ -37,8 +36,7 @@ public class ClassesServiceImpl implements ClassesService {
         return toDto(cls);
     }
 
-    // ── 관리자 (Admin) ──
-
+    /** 생성 */
     @Override
     public ClassesDto create(ClassesRequest req) {
         Classes cls = new Classes();
@@ -56,6 +54,7 @@ public class ClassesServiceImpl implements ClassesService {
         return toDto(saved);
     }
 
+    /** 수정 */
     @Override
     public ClassesDto update(Long id, ClassesRequest req) {
         Classes cls = repo.findById(id)
@@ -75,6 +74,7 @@ public class ClassesServiceImpl implements ClassesService {
         return toDto(updated);
     }
 
+    /** 삭제 */
     @Override
     public void delete(Long id) {
         if (!repo.existsById(id)) {
@@ -83,8 +83,7 @@ public class ClassesServiceImpl implements ClassesService {
         repo.deleteById(id);
     }
 
-    // ── 공통 DTO 변환 ──
-
+    /** 엔티티 → DTO 변환 헬퍼 */
     private ClassesDto toDto(Classes cls) {
         return new ClassesDto(
                 cls.getId(),
