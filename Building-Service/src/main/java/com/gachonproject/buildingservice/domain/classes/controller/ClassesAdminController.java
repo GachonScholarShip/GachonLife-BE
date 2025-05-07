@@ -18,28 +18,28 @@ public class ClassesAdminController {
 
     private final ClassesService service;
 
-    /** 페이지네이션된 전체 목록 조회 */
+    /** 페이지네이션된 전체 목록 조회 (GET /admin/classes?page=0&size=10) */
     @GetMapping
     public ApiResponse<Page<ClassesDto>> listAll(Pageable pageable) {
         Page<ClassesDto> page = service.getAll(pageable);
         return ApiResponse.response(HttpStatus.OK, "관리자용 전체 목록 조회", page);
     }
 
-    /** 상세 조회 */
+    /** 상세 조회 (GET /admin/classes/{id}) */
     @GetMapping("/{id}")
     public ApiResponse<ClassesDto> detail(@PathVariable Long id) {
         ClassesDto dto = service.getById(id);
         return ApiResponse.response(HttpStatus.OK, "관리자용 상세 조회", dto);
     }
 
-    /** 생성 */
+    /** 생성 (POST /admin/classes) */
     @PostMapping
     public ApiResponse<ClassesDto> create(@Valid @RequestBody ClassesRequest req) {
         ClassesDto dto = service.create(req);
         return ApiResponse.response(HttpStatus.CREATED, "강의실 생성 성공", dto);
     }
 
-    /** 수정 */
+    /** 전체 수정 (PUT /admin/classes/{id}) */
     @PutMapping("/{id}")
     public ApiResponse<ClassesDto> update(
             @PathVariable Long id,
@@ -49,7 +49,18 @@ public class ClassesAdminController {
         return ApiResponse.response(HttpStatus.OK, "강의실 수정 성공", dto);
     }
 
-    /** 삭제 */
+    /** 부분 수정도 허용 (PATCH /admin/classes/{id}) */
+    @PatchMapping("/{id}")
+    public ApiResponse<ClassesDto> partialUpdate(
+            @PathVariable Long id,
+            @Valid @RequestBody ClassesRequest req
+    ) {
+
+        ClassesDto dto = service.update(id, req);
+        return ApiResponse.response(HttpStatus.OK, "강의실 부분 수정 성공", dto);
+    }
+
+    /** 삭제 (DELETE /admin/classes/{id}) */
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         service.delete(id);
