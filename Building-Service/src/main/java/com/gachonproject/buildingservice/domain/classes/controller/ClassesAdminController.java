@@ -12,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/classes")
 @RequiredArgsConstructor
@@ -26,6 +28,19 @@ public class ClassesAdminController {
     ) {
         Page<ClassesDto> page = service.getAll(pageable);
         return ApiResponse.response(HttpStatus.OK, "관리자용 전체 목록 조회", page);
+    }
+
+    @GetMapping("/detail")
+    public ApiResponse<List<ClassesDto>> getById(
+            @RequestParam String buildingName,
+            @RequestParam String floor,
+            @RequestParam int pageNum,
+            @RequestParam int pageSize
+    ) {
+
+        List<ClassesDto> response = service.getDetailList(buildingName, floor, pageNum, pageSize);
+
+        return ApiResponse.response(HttpStatus.OK, "건물에 따른 강의실 목록을 반환합니다.", response);
     }
 
     /** 상세 조회 (GET /admin/classes/{id}) */
