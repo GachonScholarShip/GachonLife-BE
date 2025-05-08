@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,10 @@ public class ClassesAdminController {
 
     private final ClassesService service;
 
-    /** 페이지네이션된 전체 목록 조회 (GET /admin/classes?page=0&size=10) */
     @GetMapping
-    public ApiResponse<Page<ClassesDto>> listAll(Pageable pageable) {
+    public ApiResponse<Page<ClassesDto>> listAll(
+            @PageableDefault(size = 10000) Pageable pageable
+    ) {
         Page<ClassesDto> page = service.getAll(pageable);
         return ApiResponse.response(HttpStatus.OK, "관리자용 전체 목록 조회", page);
     }
