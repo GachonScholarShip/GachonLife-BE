@@ -4,6 +4,9 @@ import com.gachonproject.buildingservice.domain.classes.dto.ClassesDto;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 public interface ClassesService {
 
@@ -21,4 +24,6 @@ public interface ClassesService {
 
     /** 삭제 */
     void delete(Long id);
+
+    List<ClassesDto> getDetailList(String buildingName, String floor, int pageNum, int pageSize);
 }
