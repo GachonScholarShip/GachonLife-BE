@@ -9,6 +9,7 @@ import com.gachonproject.buildingservice.global.common.response.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,7 +95,22 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Override
     public List<ClassesDto> getDetailList(String buildingName, String floor, int pageNum, int pageSize) {
-        return List.of();
+
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
+
+        if (floor.equals("0")) { // 모든 건물 페이지네이션
+            return repo.findByBuildingName(buildingName, pageable)
+                    .getContent()
+                    .stream()
+                    .map(this::toDto)
+                    .toList();
+        }
+
+        return repo.findByBuildingNameAndFloor(buildingName, floor, pageable)
+                .getContent()
+                .stream()
+                .map(this::toDto)
+                .toList();
     }
 
     private String normalizeFloor(String raw) {
