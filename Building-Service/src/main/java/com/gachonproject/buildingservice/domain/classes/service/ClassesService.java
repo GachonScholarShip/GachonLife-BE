@@ -4,7 +4,6 @@ import com.gachonproject.buildingservice.domain.classes.dto.ClassesDto;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
 package com.gachonproject.buildingservice.domain.classes.dto;
 
-import lombok.*;
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Getter @Setter @NoArgsConstructor
 public class ClassesRequest {
-
     @NotBlank private String code;
     @NotBlank private String title;
     @NotBlank private String grade;
@@ -17,5 +17,8 @@ public class ClassesRequest {
     @NotBlank private String timeSlot;
     @NotBlank private String buildingName;
     @NotBlank private String roomName;
-    @NotBlank private String floor;
+
+    @JsonProperty("floor")
+    @NotBlank
+    private String floorRaw;
 }

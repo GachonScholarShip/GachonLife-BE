@@ -1,14 +1,14 @@
 package com.gachonproject.buildingservice.domain.classes.service.impl;
 
+import com.gachonproject.buildingservice.domain.classes.entity.Classes;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesDto;
 import com.gachonproject.buildingservice.domain.classes.dto.ClassesRequest;
-import com.gachonproject.buildingservice.domain.classes.entity.Classes;
 import com.gachonproject.buildingservice.domain.classes.repository.ClassesRepository;
 import com.gachonproject.buildingservice.domain.classes.service.ClassesService;
+import com.gachonproject.buildingservice.global.common.response.ApiResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +22,8 @@ import java.util.List;
 public class ClassesServiceImpl implements ClassesService {
 
     private final ClassesRepository repo;
+
+    // ── 관리자 & 사용자 공통 ──
 
     /** 페이징된 전체 조회 */
     @Override
@@ -38,6 +40,8 @@ public class ClassesServiceImpl implements ClassesService {
         return toDto(cls);
     }
 
+    // ── 관리자 전용 ──
+
     /** 생성 */
     @Override
     public ClassesDto create(ClassesRequest req) {
@@ -51,7 +55,9 @@ public class ClassesServiceImpl implements ClassesService {
         cls.setTimeSlot(req.getTimeSlot());
         cls.setBuildingName(req.getBuildingName());
         cls.setRoomName(req.getRoomName());
-        cls.setFloor(req.getFloor());
+
+        // 원본 floorRaw 에서 F/f 뒤 제거
+        cls.setFloor(normalizeFloor(req.getFloorRaw()));
         Classes saved = repo.save(cls);
         return toDto(saved);
     }
@@ -70,7 +76,8 @@ public class ClassesServiceImpl implements ClassesService {
         cls.setTimeSlot(req.getTimeSlot());
         cls.setBuildingName(req.getBuildingName());
         cls.setRoomName(req.getRoomName());
-        cls.setFloor(req.getFloor());
+        // 원본 floorRaw 에서 F/f 뒤 제거
+        cls.setFloor(normalizeFloor(req.getFloorRaw()));
         cls.setUpdatedAt(LocalDateTime.now());
         Classes updated = repo.save(cls);
         return toDto(updated);
@@ -87,25 +94,18 @@ public class ClassesServiceImpl implements ClassesService {
 
     @Override
     public List<ClassesDto> getDetailList(String buildingName, String floor, int pageNum, int pageSize) {
-
-        Pageable pageable = PageRequest.of(pageNum, pageSize);
-
-        if (floor.equals("0")) { // 모든 건물 페이지네이션
-            return repo.findByBuildingName(buildingName, pageable)
-                    .getContent()
-                    .stream()
-                    .map(this::toDto)
-                    .toList();
-        }
-
-        return repo.findByBuildingNameAndFloor(buildingName, floor, pageable)
-                .getContent()
-                .stream()
-                .map(this::toDto)
-                .toList();
+        return List.of();
     }
 
-    /** 엔티티 → DTO 변환 헬퍼 */
+    private String normalizeFloor(String raw) {
+        raw = raw.strip();
+        if (raw.length() > 1 && (raw.endsWith("F") || raw.endsWith("f"))) {
+            return raw.substring(0, raw.length() - 1);
+        }
+        return raw;
+    }
+
+    /** 엔티티 → DTO 변환 */
     private ClassesDto toDto(Classes cls) {
         return new ClassesDto(
                 cls.getId(),
@@ -118,7 +118,7 @@ public class ClassesServiceImpl implements ClassesService {
                 cls.getTimeSlot(),
                 cls.getBuildingName(),
                 cls.getRoomName(),
-                cls.getFloor()
+                cls.getFloor()   // 이제 String 타입
         );
     }
 }
