@@ -42,6 +42,7 @@ dependencies {
 
     // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // Jwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
