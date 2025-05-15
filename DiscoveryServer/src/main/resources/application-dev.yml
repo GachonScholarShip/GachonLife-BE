@@ -5,6 +5,11 @@ spring:
   application:
     name: discovery-service
 
+management:
+  metrics:
+    enable:
+      processor: false
+
 eureka:
   client:
     register-with-eureka: false
