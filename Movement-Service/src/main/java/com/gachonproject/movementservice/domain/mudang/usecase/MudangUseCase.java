@@ -26,7 +26,7 @@ import java.util.List;
 public class MudangUseCase {
 
     private static final String TIME_FORMAT = "HH:mm";
-    private static final String RESPONSE_FORMAT = "%s분 무당이가 %s분 뒤 도착 예정입니다.";
+    private static final String RESPONSE_FORMAT = "반도체대학 정류장에 무당이가 %s분 뒤 도착 예정입니다.";
 
     private final MudangSaveService mudangSaveService;
     private final MudangGetService mudangGetService;
@@ -48,7 +48,7 @@ public class MudangUseCase {
         Mudang mudang = mudangGetService.getMudang(minusFiveMinute);
 
         long abs = getAbsTime(minusFiveMinute, mudang);
-        return String.format(RESPONSE_FORMAT, mudang.getTimeslot(), abs);
+        return String.format(RESPONSE_FORMAT, abs);
     }
 
     public List<MudangDetailDto> getMudangTimeList(int pageNum, int pageSize) {
