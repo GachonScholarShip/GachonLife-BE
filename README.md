@@ -14,7 +14,7 @@
   </tr>
   <tr>
     <td align="center">MSA 환경 구축, Raspberry Pi 서버 구축, <br> 사용자 기능 구현, 무당이 기능 구현, 로드뷰 기능 구현</td>
-    <td align="center">건물 기능 구현, 강의실 기능 구현, QR 기능 구현</td>
+    <td align="center">건물 기능 구현, 강의실 기능 구현</td>
   </tr>
     <tr>
     <td align="center">PM, BE</td>
@@ -53,5 +53,5 @@
 
 ## 시스템 아키텍처
 
-![시스템 아키텍처 프레임 (Raspberry Pi)](https://github.com/user-attachments/assets/b3fa871a-bb55-41cf-8514-fe475a1e9310)
+![최종 아키텍처 1](https://github.com/user-attachments/assets/e055ffd1-ce8d-4f65-8064-f87bc5bb5f11)
 
